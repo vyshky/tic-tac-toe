@@ -28,7 +28,7 @@ namespace XO
         public MainWindow()
         {
             InitializeComponent();
-            Move = 'O';
+            Move = 'X';
             Lable_Player.Content = FirstPlayer;
         }
 
@@ -90,7 +90,6 @@ namespace XO
             if (ThreeInRow())
             {
                 Win = true;
-                ChangeMove();
                 Lable_Player.Content = $@"Победил {Move}";
             }
         }
@@ -98,7 +97,7 @@ namespace XO
         private void New_Game_Click(object sender, RoutedEventArgs e)
         {
             Lable_Player.Content = FirstPlayer;
-            Move = 'O';
+            Move = 'X';
             Win = false;
             Clear();
         }
@@ -112,15 +111,14 @@ namespace XO
         {
             if (Win == true)
             {
-                MessageBox.Show("WIN", "Click New Game", MessageBoxButton.OK);
+                MessageBox.Show(Lable_Player.Content.ToString(), "Click New Game", MessageBoxButton.OK);
                 return;
             }
-            //Button srcButton = e.Source as Button;
             Button dynamicButton = sender as Button;
             if (NotEmpty(dynamicButton)) return;
             dynamicButton.Content = Move;
-            ChangeMove();
             WinPlayer();
+            if (Win != true) ChangeMove();
         }
 
         private bool NotEmpty(ContentControl button)
